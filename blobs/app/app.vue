@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="messages">
+    <!-- <div class="messages">
       <p :class="{ active: activeMessage === 0 }">
         Built for<br />People and Brands<br />on a mission.
       </p>
       <p :class="{ active: activeMessage === 1 }">
         Different Expertise.<br />Shared Energy.
       </p>
-    </div>
+    </div> -->
     <div class="gradient-bg">
       <svg xmlns="http://www.w3.org/2000/svg">
         <defs>
