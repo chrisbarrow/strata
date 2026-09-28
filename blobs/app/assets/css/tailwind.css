@@ -1,0 +1,441 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --color-bg1: rgb(255, 255, 255);
+  --color-bg2: rgb(0, 0, 0);
+  --color1: 59, 131, 161;
+  --color2: 29, 216, 160;
+  --color3: 169, 122, 232;
+  --color4: 217, 0, 138;
+  --color5: 252, 0, 0;
+  --color6: 255, 165, 0;
+  --color7: 235, 122, 85;
+  --circle-size: 60vw;
+  --blending: hard-light;
+}
+
+/* @keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+} */
+
+.gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2)); */
+  background: var(--color-bg1);
+  top: 0;
+  left: 0;
+
+  svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+  }
+
+  /* .orbit does the circular travel (it rotates around an off-center
+     transform-origin, which swings the whole element through a circle).
+     .box counter-rotates by the same amount so the coloured square itself
+     never visibly spins -- it just travels along the circular path. */
+  .orbit {
+    position: relative;
+    width: var(--circle-size);
+    aspect-ratio: 1 / 1;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+    flex-shrink: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .box {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
+  /* Both hold at 0% -> 8% and 92% -> 100%, so every div pauses in the
+     line at the start and end of its loop, and travels the circle in
+     the middle 84% of the cycle at constant (linear) speed. */
+  @keyframes orbit-cw {
+    0%,
+    8% {
+      transform: rotate(0deg);
+    }
+    92%,
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes orbit-ccw {
+    0%,
+    8% {
+      transform: rotate(0deg);
+    }
+    92%,
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  @keyframes counter-cw {
+    0%,
+    8% {
+      transform: rotate(0deg);
+    }
+    92%,
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  @keyframes counter-ccw {
+    0%,
+    8% {
+      transform: rotate(0deg);
+    }
+    92%,
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .gradients-container {
+    filter: url(#goo) blur(20px);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Each div: a different orbit radius (transform-origin offset),
+     a different direction, a different (slow) duration, and a
+     negative delay so they're out of phase with each other. */
+  .orbit:nth-child(1) {
+    transform-origin: 0 -90px;
+    animation-name: orbit-cw;
+    animation-duration: 30s;
+    animation-delay: -2s;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color1), 1) 0,
+        rgba(var(--color1), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+  }
+  .orbit:nth-child(1) .box {
+    background: var(--color1);
+    animation-name: counter-cw;
+    animation-duration: 30s;
+    animation-delay: -2s;
+  }
+
+  .orbit:nth-child(2) {
+    transform-origin: 110px 0;
+    animation-name: orbit-ccw;
+    animation-duration: 40s;
+    animation-delay: -7s;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color2), 1) 0,
+        rgba(var(--color2), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+  }
+  .orbit:nth-child(2) .box {
+    background: var(--color2);
+
+    animation-name: counter-ccw;
+    animation-duration: 40s;
+    animation-delay: -7s;
+  }
+
+  .orbit:nth-child(3) {
+    transform-origin: -100px 60px;
+    animation-name: orbit-cw;
+    animation-duration: 30s;
+    animation-delay: -4s;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color3), 1) 0,
+        rgba(var(--color3), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+  }
+  .orbit:nth-child(3) .box {
+    background: var(--color3);
+    animation-name: counter-cw;
+    animation-duration: 30s;
+    animation-delay: -4s;
+  }
+
+  .orbit:nth-child(4) {
+    transform-origin: 0 130px;
+    animation-name: orbit-ccw;
+    animation-duration: 45s;
+    animation-delay: -11s;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color4), 1) 0,
+        rgba(var(--color4), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+  }
+  .orbit:nth-child(4) .box {
+    background: var(--color4);
+    animation-name: counter-ccw;
+    animation-duration: 45s;
+    animation-delay: -11s;
+  }
+
+  .orbit:nth-child(5) {
+    transform-origin: -120px -50px;
+    animation-name: orbit-cw;
+    animation-duration: 30s;
+    animation-delay: -9s;
+
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color5), 1) 0,
+        rgba(var(--color5), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+  }
+  .orbit:nth-child(5) .box {
+    background: var(--color5);
+    animation-name: counter-cw;
+    animation-duration: 30s;
+    animation-delay: -9s;
+  }
+
+  .orbit:nth-child(6) {
+    transform-origin: 80px -80px;
+    animation-name: orbit-ccw;
+    animation-duration: 24s;
+    animation-delay: -3s;
+
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color6), 1) 0,
+        rgba(var(--color6), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+  }
+  .orbit:nth-child(6) .box {
+    background: var(--color6);
+    animation-name: counter-ccw;
+    animation-duration: 24s;
+    animation-delay: -3s;
+  }
+
+  .orbit:nth-child(7) {
+    transform-origin: -60px 100px;
+    animation-name: orbit-cw;
+    animation-duration: 30s;
+    animation-delay: -13s;
+
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color7), 1) 0,
+        rgba(var(--color7), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+  }
+  .orbit:nth-child(7) .box {
+    animation-name: counter-cw;
+    animation-duration: 30s;
+    animation-delay: -13s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit,
+    .box {
+      animation: none;
+    }
+  }
+
+  /* 
+
+  .g1 {
+    position: relative;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color1), 1) 0,
+        rgba(var(--color1), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+
+    transform-origin: center center;
+    animation: moveVertical 20s ease 2;
+
+    opacity: 1;
+  }
+
+  .g2 {
+    position: relative;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color2), 1) 0,
+        rgba(var(--color2), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+
+    transform-origin: calc(50% - 400px);
+    animation: moveInCircle 20s reverse 2;
+
+    opacity: 1;
+  }
+
+  .g3 {
+    position: relative;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color3), 1) 0,
+        rgba(var(--color3), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+
+    transform-origin: calc(50% + 400px);
+    animation: moveInCircle 30s linear 2;
+
+    opacity: 1;
+  }
+
+  .g4 {
+    position: relative;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color4), 1) 0,
+        rgba(var(--color4), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+
+    transform-origin: calc(50% - 200px);
+    animation: moveHorizontal 30s ease 2;
+
+    opacity: 1;
+  }
+
+  .g5 {
+    position: relative;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color5), 1) 0,
+        rgba(var(--color5), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: calc(var(--circle-size));
+    height: calc(var(--circle-size));
+
+    transform-origin: calc(50% - 800px) calc(50% + 200px);
+    animation: moveInCircle 20s ease 2;
+
+    opacity: 1;
+  }
+
+  .g6 {
+    position: relative;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color6), 1) 0,
+        rgba(var(--color6), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: calc(var(--circle-size));
+    height: calc(var(--circle-size));
+
+    transform-origin: calc(50% - 800px) calc(50% + 200px);
+    animation: moveInCircle 20s ease 2;
+
+    opacity: 1;
+  }
+
+  .g7 {
+    position: relative;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--color7), 1) 0,
+        rgba(var(--color7), 0) 50%
+      )
+      no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: calc(var(--circle-size));
+    height: calc(var(--circle-size));
+
+    transform-origin: calc(50% - 800px) calc(50% + 200px);
+    animation: moveInCircle 20s ease 2;
+
+    opacity: 1;
+  } */
+}
